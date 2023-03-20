@@ -23,8 +23,13 @@ function createGalleryItemsMarkup(items) {
 	}).join('');
 }
 
-const instance = basicLightbox.create(
-	`<img src="$" width="800" height="600">`,
+function onImgClick(evt) {
+	evt.preventDefault();
+	const isImgClick = evt.target.dataset.source;
+	if (!isImgClick) return;
+
+	const instance = basicLightbox.create(
+	`<img src="${evt.target.dataset.source}" width="800" height="600">`,
 	{
 		onShow: (instance) => {
 			window.addEventListener('keydown', onEscKey);
@@ -35,16 +40,10 @@ const instance = basicLightbox.create(
 		},
 	}
 );
-
-function onImgClick(evt) {
-	evt.preventDefault();
-	const datasetSource = evt.target.dataset.source;
-	if (!datasetSource) return;
-	instance.element().querySelector('img').src = datasetSource;
 	instance.show();
-}
 
 function onEscKey(evt) {
 	if (evt.code !== 'Escape') return;
 	instance.close();
-}
+		}
+	}
